@@ -1,0 +1,93 @@
+  <!-- Nav tabs -->
+  <legend>Github Search Form</legend>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#title" aria-controls="title" role="tab" data-toggle="tab" ng-click="switchTab()">Search by Title</a></li>
+    <li role="presentation"><a href="#issue" aria-controls="issue" role="tab" data-toggle="tab" ng-click="switchTabIss()">Search by Issue</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="title"><form>
+					      <fieldset>
+					        
+					        <label>Which repository are you searching for?</label><br />
+					        <input type="text" ng-model="searchText"><br />
+					        <label>Which language? (optional)</label><br />
+					        <input type="text" ng-model="language"><br />
+					        <label>How many stars at least? (optional)</label><br />
+					        <input type="text" ng-model="stars"><br />
+					        <button ng-click="searchClicked()" class="btn">Search</button>
+					      </fieldset>
+					    </form>
+					    <div ng-if="dataLoaded">
+					    	<div>
+					    		Sortby:<br />
+					    		<label>
+								    <input type="radio" ng-model="sortfilter" value="" checked="checked">
+								    None
+								  </label><br/>
+								  <label >
+								    <input type="radio" ng-model="sortfilter" value="-stargazers_count">
+								    <span class="glyphicon glyphicon-star"></span> Stars
+								  </label><br/>
+								  <label>
+								    <input type="radio" ng-model="sortfilter" value="-watchers_count">
+								     <span class="glyphicon glyphicon-paperclip"></span> Watchers
+								  </label>
+							</div>
+						
+					    	<ul class="list-group">
+					    		<li class="list-group-item" ng-repeat="item in items | orderBy: sortfilter">
+					    		<h3> <img src="{{item.owner.avatar_url}}" alt="Owner of {{item.name}}" class="img-rounded" width="50px"> {{item.name}}</h3>
+					    			
+					    			<div>Created: {{item.created_at | date:"dd-MM-yyyy"}}</div>
+					    			<div>Language: {{item.language}}</div>
+					    			<div>Stars: {{item.stargazers_count}}</div>
+					    			<div>Watchers: {{item.watchers_count}}</div>
+					    			<div>Open Issues: {{item.open_issues_count}}</div>
+					    		</li>
+					    	</ul>
+					    </div>
+					    <div ng-if="dataFailed"><h2 class="glyphicon glyphicon-remove">Sorry, no repositories found!</h2></div></div>
+   			 <div role="tabpanel" class="tab-pane" id="issue">
+   			 	<fieldset>
+					        
+					        <label>What issue are you searching for?</label><br />
+					        <input type="text" ng-model="searchTextIssue"><br />
+					 
+					        <button ng-click="searchClickedIssue()" class="btn">Search</button>
+					      </fieldset>
+					    </form>
+					    <div ng-if="dataLoadedIssue">
+					    	<div>
+					    		Sortby: <br />
+					    		<label>
+								    <input type="radio" ng-model="sortfilteri" value="" checked="checked">
+								    None
+								  </label><br/>
+								  <label>
+								    <input type="radio" ng-model="sortfilteri" value="-stargazers_count">
+								     <span class="glyphicon glyphicon-star"></span> Stars
+								  </label><br/>
+								  <label>
+								    <input type="radio" ng-model="sortfilteri" value="-watchers_count">
+								    <span class="glyphicon glyphicon-paperclip"></span> Watchers
+								  </label>
+							</div>
+					    	<ul class="list-group">
+					    		<li class="list-group-item" ng-repeat="item in items | orderBy: sortfilteri track by $index ">
+					    		<h3> <img src="{{item.owner.avatar_url}}" alt="Owner of {{item.name}}" class="img-rounded" width="50px"> {{item.name}}</h3>
+					    			
+					    			<div>Created: {{item.created_at | date:"dd-MM-yyyy"}}</div>
+					    			<div>Language: {{item.language}}</div>
+					    			<div>Stars: {{item.stargazers_count}}</div>
+					    			<div>Watchers: {{item.watchers_count}}</div>
+					    			<div>Open Issues: {{item.open_issues_count}}</div>
+					    		</li>
+					    	</ul>
+					    </div>
+					    <div ng-if="dataFailedIssue"><h2 class="glyphicon glyphicon-remove">Sorry, no repositories with this issue found!</h2></div></div></div>
+
+  </div>
+
+</div>
